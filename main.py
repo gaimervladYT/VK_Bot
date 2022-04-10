@@ -7,7 +7,7 @@ from sqlalchemy.orm.session import sessionmaker
 from sqlalchemy.ext.asyncio import engine
 from sqlalchemy.ext.asyncio.session import AsyncSession
 
-
+from reply import reply_to_message, start
 
 class Setting(BaseSettings):
     confirmation_string:str
@@ -50,8 +50,21 @@ async def authorize(
         print('okay')
         print(settings.confirmation_string)
         return Response(content=settings.confirmation_string, media_type="application/json")
+    elif req_body['type'] == 'message_new':
+        if "payload" in req_body['object']['message']:
+            pd = req_body ['object']['message']['payload']
+            if pd == '{"command":"start"}':
+                await start(vk_api, req_body['object']['message']['from_id'])
+
+            
     else:
-        return False
+        await reply_to_message(
+            req_body['object']['message']['text'],
+            vk_api,
+            req_body['object']['message']['from_id'],
+            session
+        )
+        return Response('ок', media_type="application/json")
 if __name__ == "__main__":
     uvicorn.run("main:app", port=9000, reload=True)
 

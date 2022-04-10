@@ -10,10 +10,10 @@ cursor.execute("""
         answer text
     )
 """)
-cursor.execute("insert into phrases values (0, 'privet','poka')")
-cursor.execute("insert into phrases values (1, 'саня', 'не списывай')")
-cursor.execute("insert into phrases values (2, 'gg', 'vp')")
-
+cursor.execute("insert into phrases values (0, 'Привет','Привет, как дела?')")
+cursor.execute("insert into phrases values (1, 'а у тибя как?', 'Отлично')")
+cursor.execute("insert into phrases values (2, 'Как Играть?', 'https://www.youtube.com/watch?v=YlkzLWgpClc')")
+cursor.execute("insert into phrases values (3, 'Пока', 'пока')")
 
 connection.commit()
 connection.close()
