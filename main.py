@@ -57,14 +57,14 @@ async def authorize(
                 await start(vk_api, req_body['object']['message']['from_id'])
 
             
-    else:
-        await reply_to_message(
-            req_body['object']['message']['text'],
-            vk_api,
-            req_body['object']['message']['from_id'],
-            session
-        )
-        return Response('ок', media_type="application/json")
+        else:
+            await reply_to_message(
+                req_body['object']['message']['text'],
+                vk_api,
+                req_body['object']['message']['from_id'],
+                session
+            )
+    return Response('ok', media_type='application/json')
 if __name__ == "__main__":
     uvicorn.run("main:app", port=9000, reload=True)
 
